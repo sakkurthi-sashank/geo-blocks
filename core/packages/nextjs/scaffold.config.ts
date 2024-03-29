@@ -1,4 +1,33 @@
+import { defineChain } from "viem";
 import * as chains from "viem/chains";
+
+export const polygonCardona = defineChain({
+  id: 2442,
+  name: "Polygon zkEVM Cardona Testnet",
+  network: "polygon-zkevm-cardona-testnet",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://etherscan.cardona.zkevm-rpc.com"],
+    },
+    public: {
+      http: ["https://etherscan.cardona.zkevm-rpc.com"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "PolygonScan",
+      url: "https://cardona-zkevm.polygonscan.com",
+    },
+  },
+  testnet: true,
+  contracts: {
+    multicall3: {
+      address: "0xca11bde05977b3631167028862be2a173976ca11",
+      blockCreated: 525686,
+    },
+  },
+});
 
 export type ScaffoldConfig = {
   targetNetworks: readonly chains.Chain[];
@@ -11,6 +40,7 @@ export type ScaffoldConfig = {
 
 const scaffoldConfig = {
   // The networks on which your DApp is live
+  // targetNetworks: [polygonCardona as any] as const,
   targetNetworks: [chains.hardhat],
 
   // The interval at which your front-end polls the RPC servers for new data
