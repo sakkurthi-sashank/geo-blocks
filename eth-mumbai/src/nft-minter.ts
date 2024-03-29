@@ -19,7 +19,7 @@ import {
   TokensMinted as TokensMintedEvent,
   TokensMintedWithSignature as TokensMintedWithSignatureEvent,
   Transfer as TransferEvent
-} from "../generated/NFT Minter/NFT Minter"
+} from "../generated/NFTMinter/NFTMinter"
 import {
   Approval,
   ApprovalForAll,

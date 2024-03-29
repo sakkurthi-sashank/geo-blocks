@@ -21,7 +21,7 @@ import {
   TokensMinted,
   TokensMintedWithSignature,
   Transfer
-} from "../generated/NFT Minter/NFT Minter"
+} from "../generated/NFTMinter/NFTMinter"
 
 export function createApprovalEvent(
   owner: Address,

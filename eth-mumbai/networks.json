@@ -1,6 +1,6 @@
 {
   "mumbai": {
-    "NFT Minter": {
+    "NFTMinter": {
       "address": "0x2cd361587F1e172b2bE59B8E21fd63f4039F6010",
       "startBlock": 47618004
     }

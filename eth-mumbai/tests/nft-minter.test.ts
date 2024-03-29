@@ -8,7 +8,7 @@ import {
 } from "matchstick-as/assembly/index"
 import { Address, BigInt, Bytes } from "@graphprotocol/graph-ts"
 import { Approval } from "../generated/schema"
-import { Approval as ApprovalEvent } from "../generated/NFT Minter/NFT Minter"
+import { Approval as ApprovalEvent } from "../generated/NFTMinter/NFTMinter"
 import { handleApproval } from "../src/nft-minter"
 import { createApprovalEvent } from "./nft-minter-utils"
 

@@ -5,12 +5,12 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: NFT Minter
+    name: NFTMinter
     network: mumbai
     source:
       address: "0x2cd361587F1e172b2bE59B8E21fd63f4039F6010"
-      abi: NFT Minter
-      startBlock: 47618004
+      abi: NFTMinter
+      startBlock: 047618004
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -37,8 +37,8 @@ dataSources:
         - TokensMintedWithSignature
         - Transfer
       abis:
-        - name: NFT Minter
-          file: ./abis/NFT Minter.json
+        - name: NFTMinter
+          file: ./abis/NFTMinter.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
