@@ -1,8 +1,8 @@
 {
-  "mainnet": {
-    "CryptoPunksMarket": {
-      "address": "0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb",
-      "startBlock": 3914495
+  "mumbai": {
+    "NFT Minter": {
+      "address": "0x2cd361587F1e172b2bE59B8E21fd63f4039F6010",
+      "startBlock": 47618004
     }
   }
 }
