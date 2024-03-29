@@ -11,8 +11,8 @@ const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
 
   const { data: totalCounter } = useScaffoldContractRead({
-    contractName: "YourContract",
-    functionName: "getMessage",
+    contractName: "MyContract",
+    functionName: "name",
   });
 
   console.log(totalCounter);
