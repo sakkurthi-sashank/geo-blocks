@@ -6,6 +6,8 @@ buildscript {
     }
     dependencies {
         // Other dependencies
+
+        classpath 'com.google.ar.sceneform:plugin:1.17.1'
         classpath 'com.google.gms:google-services:4.4.1'
     }
 }

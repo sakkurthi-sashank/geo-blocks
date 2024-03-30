@@ -2,6 +2,7 @@ package com.ritorno.geoblocks;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.hardware.Camera;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Objects;
 
 
 public class CapturaActivity extends Activity implements SensorEventListener {
@@ -42,33 +44,26 @@ public class CapturaActivity extends Activity implements SensorEventListener {
     public float centerY;   //centro vertical ajustado
     public float escalaX;   //usada para converter leituras em pixel
     public float escalaY;   //usada para converter leituras em pixel
-
     public float centerXpokeball;   //centro horizontal ajustado
     public float centerYpokeball;   //centro vertical ajustado
-
     public float grauXtotal = 0;
     public float grauYtotal = 0;
     public float grauZtotal = 0;
-
     public float grauXnovo = 0;
     public float grauYnovo = 0;
     public float grauZnovo = 0;
-
     public float grauXant = 0;
     public float grauYant = 0;
     public float grauZant = 0;
-
     float distanciaTopoY;
     float distanciaBaseY;
     float distanciaEsquerdaX;
     float distanciaDireitaX;
-
     public float percentImagePokemon = (float) 0.5;
     public boolean imagemPokemonPreparada = false;
     public float larguraImgPokemon = 0;
     public float alturaImgPokemon = 0;
     public float[] limitesPokemon;
-
     public float percentImagePokeball = (float) 0.15;
     public boolean imagemPokeballPreparada = false;
     public float larguraImgPokeball = 0;
@@ -90,30 +85,43 @@ public class CapturaActivity extends Activity implements SensorEventListener {
     float velocidadeY; //pixel por milisegundo
     float velocidadeXoriginal;
     float velocidadeYoriginal;
-    //public DeslocamentoPokebola deslocamentoPokebola;
 
-    public int countSound = 0; // initialise outside listener to prevent looping
+    public int countSound = 0;
 
     private CameraPreview mPreview;
     private Camera mCamera;
 
     private TextView nomePkmnCaptura;
-
-
+    private int[] tabDrawables;
+    private int[] coins;
+    int id;
+    String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Intent intent = getIntent();
+        id = intent.getIntExtra("pkmn", 0);
+        type = intent.getStringExtra("type");
         //setContentView(R.layout.view_captura);
         preparaCamera();
 
-        //Obtem gerenciador de sensores
+        tabDrawables = new int[] {
+                R.drawable.nft_1,R.drawable.nft_2,
+                R.drawable.nft_3, R.drawable.nft_4,
+                R.drawable.nft_5, R.drawable.nft_6,R.drawable.nft_7,R.drawable.nft_8,R.drawable.nft_9,R.drawable.nft_10,
+                R.drawable.nft_11,R.drawable.nft_12, R.drawable.nft_13,R.drawable.nft_14,R.drawable.nft_15,R.drawable.nft_16,
+                R.drawable.nft_17,R.drawable.nft_18 };
+
+        coins = new int[] {
+                R.drawable.coi_1,R.drawable.coi_2,
+                R.drawable.coi_3, R.drawable.coi_4,
+                R.drawable.coi_5, R.drawable.coi_6,R.drawable.coi_7,R.drawable.coi_8 };
+
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        //Obtem sensores a serem utilizados
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
 
-        //Obtem a resolução da tela
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -126,36 +134,41 @@ public class CapturaActivity extends Activity implements SensorEventListener {
     protected void onResume() {
         super.onResume();
 
-        //TODO: RESOLVIDO - procura na lista de pokemons da controladora o pokemon recebido da tela anterior.
-        //pkmn = ControladoraFachadaSingleton.getInstance().convertPokemonSerializableToObject(pkmn);
-
-        //Define label avisando se pokemon é conhecido ou novo
-        TextView labelPkmnNovo = (TextView) findViewById(R.id.labelPkmnNovo);
-            labelPkmnNovo.setText("novo");
-
-        //seta label com o nome do pokemon a ser capturado
         nomePkmnCaptura = (TextView) findViewById(R.id.txtNomePkmnCaptura);
-        //garante só rodar após as views estarem na tela
-        nomePkmnCaptura.post(new Runnable() {
-            @Override
-            public void run() {
-                nomePkmnCaptura.setText("Akash");
-                nomePkmnCaptura.measure(0,0);
-                //Posiciona o nome do pokemon na lateral superior direita com margem de 8dp à direita
-                nomePkmnCaptura.setX(dimenX - nomePkmnCaptura.getMeasuredWidth() - ViewUnitsUtil.convertDpToPixel(8));
-            }
-        });
-
-        img = (ImageView) findViewById(R.id.pokemon);
-        img.setImageResource(R.drawable.male_profile);
-
         pokebola = (ImageView) findViewById(R.id.pokeball);
+        img = (ImageView) findViewById(R.id.pokemon);
+
+
+        if(Objects.equals(type, "Golden Box"))
+        {
+            nomePkmnCaptura.post(new Runnable() {
+                @Override
+                public void run() {
+                    nomePkmnCaptura.setText("Congratulations you found a Coin !!");
+                    nomePkmnCaptura.measure(0,0);
+                    nomePkmnCaptura.setX(dimenX - nomePkmnCaptura.getMeasuredWidth() - ViewUnitsUtil.convertDpToPixel(8));
+                }
+            });
+            img.setImageResource(coins[id]);
+            pokebola.setImageResource(R.drawable.pokeball2);
+        }else if(Objects.equals(type, "Silver Box")){
+            nomePkmnCaptura.post(new Runnable() {
+                @Override
+                public void run() {
+                    nomePkmnCaptura.setText("Congratulations, you found the Monkey NFT !!");
+                    nomePkmnCaptura.measure(0,0);
+                    nomePkmnCaptura.setX(dimenX - nomePkmnCaptura.getMeasuredWidth() + ViewUnitsUtil.convertDpToPixel(8));
+                }
+            });
+            img.setImageResource(tabDrawables[id]);
+            pokebola.setImageResource(R.drawable.pokeball1);
+        }
+
 
         configuraPokebola();
         configuraPokemon();
 
         if(sensor != null){
-            //Começa a escutar os sensores utilizados
             sensorManager.registerListener(this, sensor,SensorManager.SENSOR_DELAY_GAME);
         }
 
@@ -167,7 +180,7 @@ public class CapturaActivity extends Activity implements SensorEventListener {
     @Override
     protected void onPause() {
         super.onPause();
-        //Para de escutar os sensores
+
         sensorManager.unregisterListener(this);
         imagemPokemonPreparada = false;
         imagemPokeballPreparada = false;
@@ -258,22 +271,18 @@ public class CapturaActivity extends Activity implements SensorEventListener {
             float xNovo = img.getX();
             float yNovo = img.getY();
 
-            //mantem tela ligada
             WindowManager.LayoutParams params = this.getWindow().getAttributes();
             params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
             this.getWindow().setAttributes(params);
 
-            //Leitura de valores acelerômetro - USAR QUANDO ORIENTAÇÃO FOR TRAVADA EM PORTRAIT
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
 
-            //obtem graus deslocados desde a ultima medição
-            grauXnovo = (float) ((x * 57.2958) * 0.02); //0.02 segundos devido ao SENSOR_DELAY_GAME
-            grauYnovo = (float) ((y * 57.2958) * 0.02); //0.02 segundos devido ao SENSOR_DELAY_GAME
-            grauZnovo = (float) ((z * 57.2958) * 0.02); //0.02 segundos devido ao SENSOR_DELAY_GAME
+            grauXnovo = (float) ((x * 57.2958) * 0.02);
+            grauYnovo = (float) ((y * 57.2958) * 0.02);
+            grauZnovo = (float) ((z * 57.2958) * 0.02);
 
-            //total de graus deslocados desde o inicio
             grauXtotal += grauXnovo;
             grauYtotal += grauYnovo;
             grauZtotal += grauZnovo;
@@ -282,50 +291,40 @@ public class CapturaActivity extends Activity implements SensorEventListener {
             Log.i("GrauNovo", "X: " + grauXnovo + " Y: " + grauYnovo + " Z: " + grauZnovo);
             Log.i("Grau", "X: " + grauXtotal + " Y: " + grauYtotal + " Z: " + grauZtotal);
 
-            //atualiza a posição da imagem caso o dispositivo seja deslocado consideravelmente
             if (grauYtotal > grauYant + 0.01 || grauYtotal < grauYant - 0.01) {
                 xNovo = img.getX() + (grauYnovo * escalaX);
                 img.setX(xNovo);
             } else {
-                grauYtotal = grauYant; //elimina pequenos ruidos do sensor com dispositivo parado
+                grauYtotal = grauYant;
             }
 
-            //atualiza a posição da imagem caso o dispositivo seja deslocado consideravelmente
             if (grauXtotal > grauXant + 0.01 || grauXtotal < grauXant - 0.01) {
                 yNovo = img.getY() + (grauXnovo * escalaY);
                 img.setY(yNovo);
             } else {
-                grauXtotal = grauXant; //elimina pequenos ruidos do sensor com dispositivo parado
+                grauXtotal = grauXant;
             }
 
-            //atualiza a posição da imagem caso o dispositivo seja deslocado consideravelmente
             if (grauZtotal > grauZant + 0.01 || grauZtotal < grauZant - 0.01) {
-                //rodarImagem(img,grauZtotal);
-                //TODO - compensar a alteração de largura e altura da imagem após rotação evitando o corte da imagem
-
-                //animate(0,grauZtotal,0,img);
 
                 Log.d("Pivot", "X: " + img.getPivotX() + " Y: " + img.getPivotY());
 
                 img.setRotation(grauZtotal);
             } else {
-                grauZtotal = grauZant; //elimina pequenos ruidos do sensor com dispositivo parado
+                grauZtotal = grauZant;
             }
 
-            //guarda medição para comparar com a proxima
             grauXant = grauXtotal;
             grauYant = grauYtotal;
             grauZant = grauZtotal;
 
             Log.i("IMAGEM", "X: " + img.getX() + " Y: " + img.getY());
 
-            //RETORNANDO IMAGEM PARA A TELA PARA COMPLETAR O GIRO DE 360°-------------------------------
 
-            //girando horizontalmente para a direita
             if (grauYtotal < 0) {
-                //obtem diferença em graus em relação ao centro
+
                 if (Math.abs(Math.abs(grauYtotal) - 360) <= distanciaDireitaX / escalaX) {
-                    img.setX(dimenX - 10); //compensa os limites para ser possível comparação ser verdadeira, uma vez que primeiro valor dela será sempre positivo
+                    img.setX(dimenX - 10);
                     centerX = img.getX();
                     distanciaEsquerdaX = centerX;
                     distanciaDireitaX = dimenX - centerX;
@@ -333,56 +332,43 @@ public class CapturaActivity extends Activity implements SensorEventListener {
                 }
             }
 
-            //girando horizontalmente para a esquerda
-            //arrumar reentrada compensando a largura da imagem - FEITO
             if (grauYtotal > 0) {
-                //obtem diferença em graus em relação ao centro
+
                 if (Math.abs(Math.abs(grauYtotal) - 360) <= (distanciaEsquerdaX + larguraImgPokemon) / escalaX) {
-                    //if(Math.abs(Math.abs(grauYtotal) - 360) <= distanciaEsquerdaX/escalaX){
 
                     Log.d("Passei", "DE: " + distanciaEsquerdaX + " DimX: " + dimenX + " PI: " + percentImagePokemon + " EX: " + escalaX);
                     Log.d("Passei", "estive aqui horizontal " + grauYtotal + " " + (distanciaEsquerdaX + larguraImgPokemon) / escalaX);
 
-                    //img.setX(5); //compensa os limites
-                    //img.setX(-img.getMeasuredWidth());
 
                     img.setX(-larguraImgPokemon);
                     centerX = img.getX();
-                    //distanciaEsquerdaX = centerX;
-                    //distanciaEsquerdaX = escalaX; //para forçar quociente 1 após primeiro loop
-                    distanciaEsquerdaX = escalaX - larguraImgPokemon; //para forçar quociente 1 após primeiro loop
+
+                    distanciaEsquerdaX = escalaX - larguraImgPokemon;
                     distanciaDireitaX = dimenX - centerX;
                     grauYtotal = 0;
                 }
             }
 
-            //girando verticalmente para a cima
-            //arrumar reentrada compensando a altura da imagem - FEITO
-            if (grauXtotal > 0) {
-                //obtem diferença em graus em relação ao centro
-                if (Math.abs(Math.abs(grauXtotal) - 360) <= (distanciaTopoY + alturaImgPokemon) / escalaY) {
-                    //if(Math.abs(Math.abs(grauXtotal) - 360) <= distanciaTopoY/escalaY){
 
+            if (grauXtotal > 0) {
+
+                if (Math.abs(Math.abs(grauXtotal) - 360) <= (distanciaTopoY + alturaImgPokemon) / escalaY) {
                     Log.d("Passei", "estive aqui vertical " + grauXtotal + " " + (distanciaTopoY + alturaImgPokemon) / escalaY);
 
-                    //img.setY(5); //compensa os limites
-                    //img.setY(-img.getMeasuredHeight());
 
                     img.setY(-alturaImgPokemon);
                     centerY = img.getY();
-                    //distanciaTopoY = centerY;
-                    //distanciaTopoY = escalaY; //para forçar quociente 1 após primeiro loop
-                    distanciaTopoY = escalaY - alturaImgPokemon; //para forçar quociente 1 após primeiro loop
+
+                    distanciaTopoY = escalaY - alturaImgPokemon;
                     distanciaBaseY = dimenY - centerY;
                     grauXtotal = 0;
                 }
             }
 
-            //girando verticalmente para a baixo
             if (grauXtotal < 0) {
-                //obtem diferença em graus em relação ao centro
+
                 if (Math.abs(Math.abs(grauXtotal) - 360) <= distanciaBaseY / escalaY) {
-                    img.setY(dimenY - 10); //compensa os limites
+                    img.setY(dimenY - 10);
                     centerY = img.getY();
                     distanciaTopoY = centerY;
                     distanciaBaseY = dimenY - centerY;
@@ -390,8 +376,6 @@ public class CapturaActivity extends Activity implements SensorEventListener {
                 }
             }
 
-            //obtem limites do pokemon
-            // TODO: obter limites tambem fora do onSensorChanged para permitir celulares sem o giroscópio a jogarem
             limitesPokemon = getLeftRightTopBottomImage(img.getX(),img.getY(),alturaImgPokemon,larguraImgPokemon);
         }
     }
@@ -409,10 +393,6 @@ public class CapturaActivity extends Activity implements SensorEventListener {
         setContentView(R.layout.activity_capture);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        // Create an instance of Camera
-       // mCamera = getCameraInstance();
-
-        // Create our Preview view and set it as the content of our activity.
         mPreview = new CameraPreview(this);
         FrameLayout frameLayout = (FrameLayout) findViewById(R.id.camera_preview);
         frameLayout.addView(mPreview);
@@ -511,24 +491,15 @@ public class CapturaActivity extends Activity implements SensorEventListener {
     }
 
     public void configuraPokebola(){
-        //garante só rodar após as views estarem na tela
         pokebola.post(new Runnable() {
             @Override
             public void run() {
-                //define largura da pokebola em relação ao tamanho da tela
-                larguraImgPokeball = dimenX * percentImagePokeball;
-                //obtem propoção da imagem redimensionada
-                float proporcaoPokebola = (larguraImgPokeball * 100) / pokebola.getMeasuredWidth();
-                //define altura da pokebola de forma proporcional
-                alturaImgPokeball = pokebola.getMeasuredHeight() * proporcaoPokebola / 100;
+                larguraImgPokeball = 400;
+                float proporcaoPokebola = (larguraImgPokeball * 50) / pokebola.getMeasuredWidth();
+                alturaImgPokeball = 400;
 
-                //obtem o centro da tela
                 centerXpokeball = dimenX / 2 - (((int) larguraImgPokeball) / 2);
-                centerYpokeball = dimenY - (int) alturaImgPokeball - 75; //menos 40 para compensar a barra de tarefas do android
-
-                //X: 1200 Y: 1834 CX: 300.0 CY: 459.0 IMG_X: 600 IMG_Y: 917
-
-                //modifica o tamanho da imagem e centraliza o mesmo na tela
+                centerYpokeball = dimenY - (int) alturaImgPokeball - 75;
                 AbsoluteLayout.LayoutParams params = new AbsoluteLayout.LayoutParams((int) larguraImgPokeball, (int) alturaImgPokeball, (int) centerXpokeball, (int) centerYpokeball);
                 pokebola.setLayoutParams(params);
 
