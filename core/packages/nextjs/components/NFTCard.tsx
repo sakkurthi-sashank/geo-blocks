@@ -8,6 +8,8 @@ const NFTCard = ({ id }: { id: bigint }) => {
     args: [BigInt(id)],
   });
 
+  console.log(data);
+
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg">
       <img className="w-full max-h-52" src={data} alt={`NFT ${id}`} />
