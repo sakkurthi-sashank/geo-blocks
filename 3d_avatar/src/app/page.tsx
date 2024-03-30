@@ -7,7 +7,7 @@ export default function AvatarPage() {
   const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
-    setAvatar("https://models.readyplayer.me/6607e85d75cd33aacce08a77.glb");
+    setAvatar("https://models.readyplayer.me/66080b7b2aa392635c4445d2.glb");
   }, []);
 
   return (
@@ -15,13 +15,13 @@ export default function AvatarPage() {
       {avatar ? (
         <Avatar
           modelSrc={
-            "https://models.readyplayer.me/6607e85d75cd33aacce08a77.glb"
+            "https://models.readyplayer.me/66080b7b2aa392635c4445d2.glb"
           }
           style={{
             width: "100%",
             height: "100%",
-            minHeight: "100vh",
-            minWidth: "100vw",
+            minHeight: "10vh",
+            minWidth: "10vw",
             position: "absolute",
             top: "0",
             left: "0",
