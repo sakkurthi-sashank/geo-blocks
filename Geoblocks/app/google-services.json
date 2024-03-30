@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "641807293343",
+    "project_id": "geoblocks-c07f2",
+    "storage_bucket": "geoblocks-c07f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641807293343:android:075a1af433b2821a14fbaa",
+        "android_client_info": {
+          "package_name": "com.ritorno.geoblocks"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHGGFyVrADLkBNfQKJuAnOyxNC11Fp-QY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
