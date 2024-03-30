@@ -19,7 +19,11 @@ import androidx.core.app.ActivityCompat
 import com.jpardogo.android.googleprogressbar.library.GoogleProgressBar
 import io.metamask.androidsdk.DappMetadata
 import io.metamask.androidsdk.Ethereum
+import io.metamask.androidsdk.EthereumMethod
+import io.metamask.androidsdk.EthereumRequest
 import io.metamask.androidsdk.Logger
+import io.metamask.androidsdk.RequestError
+import io.metamask.androidsdk.Result
 import io.metamask.androidsdk.SDKOptions
 
 open class SplashActivity : Activity() {
@@ -52,6 +56,8 @@ open class SplashActivity : Activity() {
             OpenNextScreen()
 
 
+
+
         val btn = this.findViewById<Button>(R.id.connect_wallet)
 
         btn.setOnClickListener {
@@ -60,9 +66,6 @@ open class SplashActivity : Activity() {
             val infuraAPIKey = "1234567890" // We use Infura API for read-only RPCs for a seamless user experience
             val ethereum = Ethereum(this, dappMetadata, SDKOptions(infuraAPIKey))
 
-            ethereum.connect {
-
-            }
             ethereum.connect() { it ->
                 when (it) {
                     is io.metamask.androidsdk.Result.Error -> {
@@ -73,6 +76,7 @@ open class SplashActivity : Activity() {
                         val editor = sp?.edit()
                         editor?.putString("address", it.value)
                         editor?.apply()
+
                         val i = Intent(baseContext, MapActivity::class.java)
                         startActivity(i)
                         finish()
@@ -81,6 +85,12 @@ open class SplashActivity : Activity() {
                     else -> {}
                 }
             }
+
+
+
+
+
+
         }
     }
 
