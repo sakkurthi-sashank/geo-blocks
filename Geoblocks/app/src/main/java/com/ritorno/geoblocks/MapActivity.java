@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -77,16 +79,24 @@ public class MapActivity extends FragmentActivity implements LocationListener, G
     public Marker LongMax;
     public ImageButton troca;
     public Location current_position, position_init;
+    public TextView tv;
+    public SharedPreferences sp = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        sp = this.getSharedPreferences("wallet", MODE_PRIVATE);
         frag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapa);
         frag.getMapAsync(this);
         troca = (ImageButton) findViewById(R.id.button_trade);
         targetPkmn = null;
+        tv = this.findViewById(R.id.wallet_adress);
+
+        String walletadress = sp.getString("address", "");
+
+        tv.setText(walletadress);
 
         appearances = new ArrayList<Poke_Location>();
         appearanceMap = new HashMap<Marker, Poke_Location>();
@@ -351,13 +361,13 @@ public class MapActivity extends FragmentActivity implements LocationListener, G
 
         ArrayList<Poke_Location> locations = new ArrayList<>();
 
-        int radius = 100;
+        int radius = 300;
         LatLng point = new LatLng(current_position.getLatitude(), current_position.getLongitude());
         Location myLocation = new Location("");
         myLocation.setLatitude(point.latitude);
         myLocation.setLongitude(point.longitude);
 
-        for(int i = 130; i<150; i++) {
+        for(int i = 0; i<10; i++) {
             double x0 = point.latitude;
             double y0 = point.longitude;
             Random random = new Random();
@@ -372,20 +382,52 @@ public class MapActivity extends FragmentActivity implements LocationListener, G
             double foundLatitude = new_x + x0;
             double foundLongitude = y + y0;
             LatLng randomLatLng = new LatLng(foundLatitude, foundLongitude);
-            locations.add( new Poke_Location(randomLatLng.latitude, randomLatLng.longitude, "Akash") );
+            locations.add( new Poke_Location(randomLatLng.latitude, randomLatLng.longitude, "Silver Box") );
         }
+
+        radius = 1000;
+
+
+        for(int i = 0; i<20; i++) {
+            double x0 = point.latitude;
+            double y0 = point.longitude;
+            Random random = new Random();
+            double radiusInDegrees = radius / 111000f;
+            double u = random.nextDouble();
+            double v = random.nextDouble();
+            double w = radiusInDegrees * Math.sqrt(u);
+            double t = 2 * Math.PI * v;
+            double x = w * Math.cos(t);
+            double y = w * Math.sin(t);
+            double new_x = x / Math.cos(y0);
+            double foundLatitude = new_x + x0;
+            double foundLongitude = y + y0;
+            LatLng randomLatLng = new LatLng(foundLatitude, foundLongitude);
+            locations.add( new Poke_Location(randomLatLng.latitude, randomLatLng.longitude, "Golden Box") );
+        }
+
         try {
 
 
             for(int i = 0; i < locations.size(); i++){
 
-                Marker pokePonto = map.addMarker(new MarkerOptions().
-                        icon(BitmapDescriptorFactory.fromResource(R.drawable.i95)).
-                        position(new LatLng(locations.get(i).getLatitude(), locations.get(i).getLongitude())).
-                        title(locations.get(i).getName()));
-                pokePonto.setTag("pokemon");
+                if(locations.get(i).getName().equals("Golden Box"))
+                {
+                    Marker pokePonto = map.addMarker(new MarkerOptions().
+                            icon(BitmapDescriptorFactory.fromResource(R.drawable.gold_32)).
+                            position(new LatLng(locations.get(i).getLatitude(), locations.get(i).getLongitude())).
+                            title(locations.get(i).getName()));
+                    pokePonto.setTag("pokemon");
+                    appearanceMap.put(pokePonto, locations.get(i));
+                }else {
+                    Marker pokePonto = map.addMarker(new MarkerOptions().
+                            icon(BitmapDescriptorFactory.fromResource(R.drawable.silver_32)).
+                            position(new LatLng(locations.get(i).getLatitude(), locations.get(i).getLongitude())).
+                            title(locations.get(i).getName()));
+                    pokePonto.setTag("pokemon");
+                    appearanceMap.put(pokePonto, locations.get(i));
+                }
 
-                appearanceMap.put(pokePonto, locations.get(i));
             }
 
 
@@ -512,6 +554,7 @@ public class MapActivity extends FragmentActivity implements LocationListener, G
             map.setMyLocationEnabled(true);
         map.setBuildingsEnabled(false);
         map.setOnMarkerClickListener(this);
+        map.setMyLocationEnabled(false);
         map.setMapStyle(MapStyleOptions.loadRawResourceStyle(
                 this, R.raw.styles));
     }
