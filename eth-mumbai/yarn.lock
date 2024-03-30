@@ -219,7 +219,7 @@
     graphql-import-node "^0.0.5"
     js-yaml "^4.1.0"
 
-"@graphprotocol/graph-cli@0.69.1":
+"@graphprotocol/graph-cli@^0.69.1":
   version "0.69.1"
   resolved "https://registry.yarnpkg.com/@graphprotocol/graph-cli/-/graph-cli-0.69.1.tgz#2ea248fb1636b46afb6101236e3f387e9d2f3275"
   integrity sha512-PekTli4hsBkF48y2NA2ufNjtdG/VL4N+E7GAavNXxFmSHM9VoCWbR4OBeJ93dAOpgHRGyx8yO1NE9DDT7yEZsg==

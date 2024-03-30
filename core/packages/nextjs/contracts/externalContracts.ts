@@ -1,20 +1,9 @@
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
-/**
- * @example
- * const externalContracts = {
- *   1: {
- *     DAI: {
- *       address: "0x...",
- *       abi: [...],
- *     },
- *   },
- * } as const;
- */
 const externalContracts = {
-  80001: {
+  1115: {
     MyContract: {
-      address: "0x2cd361587F1e172b2bE59B8E21fd63f4039F6010",
+      address: "0x9F998390291E953C45DB723966F55cc30D1D471f",
       abi: [
         {
           type: "constructor",

@@ -27,6 +27,10 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "Transactions",
     href: "/transactions",
   },
+  {
+    label: "My NFTs",
+    href: "/my-nfts",
+  },
 ];
 
 export const HeaderMenuLinks = () => {

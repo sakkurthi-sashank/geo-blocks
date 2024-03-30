@@ -4,15 +4,15 @@ indexerHints:
 schema:
   file: ./schema.graphql
 dataSources:
-  - kind: ethereum
+  - kind: ethereum/contract
     name: NFTMinter
-    network: mumbai
+    network: core
     source:
-      address: "0x2cd361587F1e172b2bE59B8E21fd63f4039F6010"
+      address: "0x9F998390291E953C45DB723966F55cc30D1D471f"
       abi: NFTMinter
-      startBlock: 047618004
+      startBlock: 18378443
     mapping:
-      kind: ethereum/events
+      kind: ethereum/contract
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:

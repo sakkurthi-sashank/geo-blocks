@@ -1908,6 +1908,8 @@ __metadata:
     "@ethersproject/providers": ^5.7.2
     "@heroicons/react": ^2.0.11
     "@rainbow-me/rainbowkit": 1.3.5
+    "@spheron/browser-upload": ^2.0.1
+    "@spheron/storage": ^2.0.4
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/node": ^17.0.35
     "@types/nprogress": ^0
@@ -2082,6 +2084,60 @@ __metadata:
   dependencies:
     antlr4ts: ^0.5.0-alpha.4
   checksum: d9e2f7042434fb850a97a2c3679f5fbf4997c7845278d0a436b3de30169e6758fe3818191694ece36dc39a40f55ae0384c4ae0ae912790b5b0806728a50466c2
+  languageName: node
+  linkType: hard
+
+"@spheron/browser-upload@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@spheron/browser-upload@npm:2.0.1"
+  dependencies:
+    "@spheron/core": 2.0.0
+    "@spheron/encryption": 1.0.0
+    form-data: ^4.0.0
+    jwt-decode: ^3.1.2
+  checksum: 1db43fdeec550aae16b82995529add76d4388e1aca4e10c215cbd07dafc16fdde9f24d0ed2f322949709842f4706a883143f8a8dbf82353cdfa27c9e83e9843c
+  languageName: node
+  linkType: hard
+
+"@spheron/core@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@spheron/core@npm:2.0.0"
+  dependencies:
+    axios: 1.1.2
+    eventsource: ^2.0.2
+    p-limit: ^3.0.0
+  checksum: 01e78696bdce9ea6aac2f4e2311b7d9d0618a30d0af64409f39e3304fa6529682f10c1c19d2511cf07a662534c8b639791e4ab58c34d395281c85fe0016d2a7a
+  languageName: node
+  linkType: hard
+
+"@spheron/core@npm:2.0.5":
+  version: 2.0.5
+  resolution: "@spheron/core@npm:2.0.5"
+  dependencies:
+    async-lock: ^1.4.0
+    axios: 1.1.2
+    eventsource: ^2.0.2
+    p-limit: ^3.0.0
+  checksum: d1bd126ccc2cf4b6500fc80dae38cdbb1c3003f09df1225db2f3b07c9c57e018ea135527d86be51f8fe8d7d345a13ba6654264fba7bcf6a42d589c7dfc395b2f
+  languageName: node
+  linkType: hard
+
+"@spheron/encryption@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@spheron/encryption@npm:1.0.0"
+  checksum: 64b7928a71faffa73dd70e244cd4ffb710cbe9684c94e908fc6c0b461f2268b96a95c9614a48373bdd22fc3a8a804363cec55cbe5b7ac61a972be12996d8aeb7
+  languageName: node
+  linkType: hard
+
+"@spheron/storage@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@spheron/storage@npm:2.0.4"
+  dependencies:
+    "@spheron/core": 2.0.5
+    "@spheron/encryption": 1.0.0
+    form-data: ^4.0.0
+    multiformats: ^9.9.0
+  checksum: 1e2fec827e838babc09ebe3cfa519a51af511d99e1fc393cc81fa6db738eb2f6b353e08a3dbf57be675cbdad074357c8cdc2f58e165588b4213c4e5257d5a49e
   languageName: node
   linkType: hard
 
@@ -4414,6 +4470,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"async-lock@npm:^1.4.0":
+  version: 1.4.1
+  resolution: "async-lock@npm:1.4.1"
+  checksum: 29e70cd892932b7c202437786cedc39ff62123cb6941014739bd3cabd6106326416e9e7c21285a5d1dc042cad239a0f7ec9c44658491ee4a615fd36a21c1d10a
+  languageName: node
+  linkType: hard
+
 "async-mutex@npm:^0.2.6":
   version: 0.2.6
   resolution: "async-mutex@npm:0.2.6"
@@ -4510,6 +4573,17 @@ __metadata:
   version: 4.8.2
   resolution: "axe-core@npm:4.8.2"
   checksum: 8c19f507dabfcb8514e4280c7fc66e85143be303ddb57ec9f119338021228dc9b80560993938003837bda415fde7c07bba3a96560008ffa5f4145a248ed8f5fe
+  languageName: node
+  linkType: hard
+
+"axios@npm:1.1.2":
+  version: 1.1.2
+  resolution: "axios@npm:1.1.2"
+  dependencies:
+    follow-redirects: ^1.15.0
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: 136c25a5031aa2845fdbda3006c36888bbe351b11d1195f1f898a23c5df1430febbdb1ad034a61f27967e83762d5b5a3e851fff8a363cb4badeb883f8ff21461
   languageName: node
   linkType: hard
 
@@ -7071,6 +7145,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eventsource@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "eventsource@npm:2.0.2"
+  checksum: c0072d972753e10c705d9b2285b559184bf29d011bc208973dde9c8b6b8b7b6fdad4ef0846cecb249f7b1585e860fdf324cbd2ac854a76bc53649e797496e99a
+  languageName: node
+  linkType: hard
+
 "evp_bytestokey@npm:^1.0.3":
   version: 1.0.3
   resolution: "evp_bytestokey@npm:1.0.3"
@@ -7396,6 +7477,16 @@ __metadata:
     debug:
       optional: true
   checksum: 584da22ec5420c837bd096559ebfb8fe69d82512d5585004e36a3b4a6ef6d5905780e0c74508c7b72f907d1fa2b7bd339e613859e9c304d0dc96af2027fd0231
+  languageName: node
+  linkType: hard
+
+"follow-redirects@npm:^1.15.0":
+  version: 1.15.6
+  resolution: "follow-redirects@npm:1.15.6"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: a62c378dfc8c00f60b9c80cab158ba54e99ba0239a5dd7c81245e5a5b39d10f0c35e249c3379eae719ff0285fff88c365dd446fab19dee771f1d76252df1bbf5
   languageName: node
   linkType: hard
 
@@ -9409,6 +9500,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jwt-decode@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "jwt-decode@npm:3.1.2"
+  checksum: 20a4b072d44ce3479f42d0d2c8d3dabeb353081ba4982e40b83a779f2459a70be26441be6c160bfc8c3c6eadf9f6380a036fbb06ac5406b5674e35d8c4205eeb
+  languageName: node
+  linkType: hard
+
 "keccak@npm:^3.0.0, keccak@npm:^3.0.1, keccak@npm:^3.0.2":
   version: 3.0.4
   resolution: "keccak@npm:3.0.4"
@@ -10346,7 +10444,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"multiformats@npm:^9.4.2":
+"multiformats@npm:^9.4.2, multiformats@npm:^9.9.0":
   version: 9.9.0
   resolution: "multiformats@npm:9.9.0"
   checksum: d3e8c1be400c09a014f557ea02251a2710dbc9fca5aa32cc702ff29f636c5471e17979f30bdcb0a9cbb556f162a8591dc2e1219c24fc21394a56115b820bb84e
@@ -11028,7 +11126,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"p-limit@npm:^3.0.2":
+"p-limit@npm:^3.0.0, p-limit@npm:^3.0.2":
   version: 3.1.0
   resolution: "p-limit@npm:3.1.0"
   dependencies:
@@ -11575,6 +11673,13 @@ __metadata:
   version: 2.5.1
   resolution: "proxy-compare@npm:2.5.1"
   checksum: c7cc151ac255150bcb24becde6495b3e399416c31991af377ce082255b51f07eaeb5d861bf8bf482703e92f88b90a5892ad57d3153ea29450d03ef921683d9fa
+  languageName: node
+  linkType: hard
+
+"proxy-from-env@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "proxy-from-env@npm:1.1.0"
+  checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
   languageName: node
   linkType: hard
 
