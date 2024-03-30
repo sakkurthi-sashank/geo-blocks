@@ -15,10 +15,7 @@ export default function MintNFTPage() {
   const { writeAsync, isLoading, isMining } = useScaffoldContractWrite({
     contractName: "MyContract",
     functionName: "mintTo",
-    args: [
-      connectedAddress,
-      "https://bafybeibkfuq5rqe6ztuaqtvblyj34y3ja2rxetmu2aycv474oizk7c47nu.ipfs.sphn.link/_d10f8daf-b1bf-4389-9054-350859230ebf.jpeg",
-    ],
+    args: [connectedAddress, uploadLink + "/" + file?.name],
     blockConfirmations: 1,
     onBlockConfirmation: txnReceipt => {
       console.log("Transaction blockHash", txnReceipt.blockHash);
