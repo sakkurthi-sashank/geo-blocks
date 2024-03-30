@@ -1,125 +1,111 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0 <0.9.0;
+pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract YourContract is ERC721URIStorage, ReentrancyGuard, Ownable {
-    using Strings for uint256;
+contract YourContract is ERC721, Ownable {
     using Counters for Counters.Counter;
-
     Counters.Counter private _tokenIdCounter;
 
-    string public baseURI;
-    string public baseExtension = ".json";
-    uint256 public cost = 0.01 ether;
-    uint256 public maxSupply = 10000;
-    bool public paused = false;
+    event TokenURIUpdated(uint256 indexed tokenId, string tokenURI);
+    event NFTBought(uint256 indexed tokenId, address buyer);
+    event NFTSold(uint256 indexed tokenId, address seller, address buyer, uint256 price);
+    event NFTListed(uint256 indexed tokenId, address seller, uint256 price);
 
-    // Marketplace variables
-    struct Listing {
-        uint256 tokenId;
-        address payable seller;
-        uint256 price;
-        bool isSold;
-    }
+    mapping(uint256 => bool) private _tokenExists;
+    mapping(uint256 => uint256) private _tokenPrices;
+    mapping(uint256 => string) private _tokenTitles;
+    mapping(uint256 => string) private _tokenDescriptions;
+    mapping(uint256 => string) private _tokenImageURLs;
 
-    Listing[] public listings;
+    constructor() ERC721("MyNFT", "MNFT") {}
 
-    event Listed(
-        uint256 indexed tokenId,
-        address seller,
-        uint256 price
-    );
-
-    event Sold(
-        uint256 indexed tokenId,
-        address buyer,
-        uint256 price
-    );
-
-    constructor(string memory _name, string memory _symbol, string memory _initBaseURI) ERC721(_name, _symbol) {
-        setBaseURI(_initBaseURI);
-    }
-
-    // Minting function
-    function mint(string memory _tokenURI) public payable returns (uint256) {
-        require(!paused, "Minting is paused");
-        require(_tokenIdCounter.current() + 1 <= maxSupply, "Max supply exceeded");
-        require(msg.value >= cost, "Insufficient funds");
-
+    function mintNFT(string memory _title, string memory _description, string memory _imageURL, address _to) public onlyOwner returns (uint256) {
         _tokenIdCounter.increment();
         uint256 newTokenId = _tokenIdCounter.current();
 
-        _safeMint(msg.sender, newTokenId);
-        _setTokenURI(newTokenId, _tokenURI);
+        _safeMint(_to, newTokenId);
+        emit TokenURIUpdated(newTokenId, _imageURL);
+
+        _tokenExists[newTokenId] = true;
+        _tokenTitles[newTokenId] = _title;
+        _tokenDescriptions[newTokenId] = _description;
+        _tokenImageURLs[newTokenId] = _imageURL;
 
         return newTokenId;
     }
 
-    // Total Supply function
-    function totalSupply() public view returns (uint256) {
-        return _tokenIdCounter.current();
+    modifier tokenExists(uint256 _tokenId) {
+        require(_tokenExists[_tokenId], "Token does not exist");
+        _;
     }
 
-    // Listing function
-    function listToken(uint256 tokenId, uint256 price) public nonReentrant {
-        require(ownerOf(tokenId) == msg.sender, "Not the token owner");
-        require(price > 0, "Price must be at least 1 wei");
+    function buyNFT(uint256 _tokenId) public payable tokenExists(_tokenId) {
+        require(msg.value >= _tokenPrices[_tokenId], "Insufficient funds");
 
-        transferFrom(msg.sender, address(this), tokenId);
+        address seller = ownerOf(_tokenId);
+        address buyer = msg.sender;
 
-        listings.push(Listing(tokenId, payable(msg.sender), price, false));
+        _transfer(seller, buyer, _tokenId);
+        emit NFTBought(_tokenId, buyer);
 
-        emit Listed(tokenId, msg.sender, price);
-    }
-
-    // Buying function
-    function buyToken(uint256 listingIndex) public payable nonReentrant {
-        Listing storage listing = listings[listingIndex];
-        require(!listing.isSold, "Item already sold");
-        require(msg.value >= listing.price, "Insufficient funds sent");
-
-        listing.isSold = true;
-        _transfer(address(this), msg.sender, listing.tokenId);
-        listing.seller.transfer(listing.price);
-
-        emit Sold(listing.tokenId, msg.sender, listing.price);
-    }
-
-    // Additional functions
-    function setCost(uint256 _newCost) public onlyOwner {
-        cost = _newCost;
-    }
-
-    function setBaseURI(string memory _newBaseURI) public onlyOwner {
-        baseURI = _newBaseURI;
-    }
-
-    function setPaused(bool _state) public onlyOwner {
-        paused = _state;
-    }
-
-    // Utility functions
-    function getUnsoldListings() public view returns (Listing[] memory) {
-        uint256 unsoldCount = 0;
-        for (uint256 i = 0; i < listings.length; i++) {
-            if (!listings[i].isSold) {
-                unsoldCount++;
-            }
+        if (msg.value > _tokenPrices[_tokenId]) {
+            payable(buyer).transfer(msg.value - _tokenPrices[_tokenId]);
         }
 
-        Listing[] memory unsoldListings = new Listing[](unsoldCount);
-        uint256 currentIndex = 0;
-        for (uint256 i = 0; i < listings.length; i++) {
-            if (!listings[i].isSold) {
-                unsoldListings[currentIndex] = listings[i];
-                currentIndex++;
+        delete _tokenPrices[_tokenId];
+    }
+
+    function sellNFT(uint256 _tokenId, uint256 _price) public tokenExists(_tokenId) {
+        require(ownerOf(_tokenId) == msg.sender, "You are not the owner of this token");
+
+        _tokenPrices[_tokenId] = _price;
+
+        emit NFTListed(_tokenId, msg.sender, _price);
+    }
+
+    function displayNFT(uint256 _tokenId) public view tokenExists(_tokenId) returns (string memory) {
+        return _tokenImageURLs[_tokenId];
+    }
+
+    function airdropNFT(address _to, string memory _title, string memory _description, string memory _imageURL) public onlyOwner returns (uint256) {
+        _tokenIdCounter.increment();
+        uint256 newTokenId = _tokenIdCounter.current();
+
+        _safeMint(_to, newTokenId);
+        emit TokenURIUpdated(newTokenId, _imageURL);
+
+        _tokenExists[newTokenId] = true;
+        _tokenTitles[newTokenId] = _title;
+        _tokenDescriptions[newTokenId] = _description;
+        _tokenImageURLs[newTokenId] = _imageURL;
+
+        return newTokenId;
+    }
+
+    function listAllNFTs() public view returns (NFT[] memory) {
+        NFT[] memory nfts = new NFT[](_tokenIdCounter.current());
+        uint256 index = 0;
+        for (uint256 i = 1; i <= _tokenIdCounter.current(); i++) {
+            if (_tokenExists[i]) {
+                nfts[index] = NFT({
+                    tokenId: i,
+                    title: _tokenTitles[i],
+                    description: _tokenDescriptions[i],
+                    imageURL: _tokenImageURLs[i]
+                });
+                index++;
             }
         }
+        return nfts;
+    }
 
-        return unsoldListings;
+    struct NFT {
+        uint256 tokenId;
+        string title;
+        string description;
+        string imageURL;
     }
 }
