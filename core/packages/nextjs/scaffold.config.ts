@@ -21,12 +21,28 @@ export const polygonCardona = defineChain({
     },
   },
   testnet: true,
-  contracts: {
-    multicall3: {
-      address: "0xca11bde05977b3631167028862be2a173976ca11",
-      blockCreated: 525686,
+});
+
+export const coreDaoTest = defineChain({
+  id: 1115,
+  name: "CoreDAO Testnet",
+  network: "Core Testnet",
+  nativeCurrency: { name: "Core", symbol: "tCORE", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.test.btcs.network"],
+    },
+    public: {
+      http: ["https://rpc.test.btcs.network"],
     },
   },
+  blockExplorers: {
+    default: {
+      name: "CoreScan",
+      url: "https://scan.test.btcs.network",
+    },
+  },
+  testnet: true,
 });
 
 export type ScaffoldConfig = {
@@ -41,7 +57,7 @@ export type ScaffoldConfig = {
 const scaffoldConfig = {
   // The networks on which your DApp is live
   // targetNetworks: [polygonCardona as any] as const,
-  targetNetworks: [chains.polygonMumbai, chains.coreDao, polygonCardona],
+  targetNetworks: [coreDaoTest],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)
