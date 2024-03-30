@@ -11,12 +11,13 @@ export default function MintNFTPage() {
   const [uploadLink, setUploadLink] = useState<string>("");
   const [dynamicLink, setDynamicLink] = useState<string>("");
   const { address: connectedAddress } = useAccount();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   const { writeAsync, isLoading, isMining } = useScaffoldContractWrite({
-    contractName: "MyContract",
-    functionName: "mintTo",
-    args: [connectedAddress, uploadLink + "/" + file?.name],
-    blockConfirmations: 1,
+    contractName: "YourContract",
+    functionName: "mintNFT",
+    args: [title, description,dynamicLink + "/" + file?.name,  connectedAddress],
     onBlockConfirmation: txnReceipt => {
       console.log("Transaction blockHash", txnReceipt.blockHash);
     },
@@ -59,6 +60,21 @@ export default function MintNFTPage() {
               setFile(e.target.files[0]);
             }
           }}
+        />
+         <input
+          className="mb-4 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
+          type="input"
+          value={title}
+          placeholder="Title"
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <input
+          className="mb-4 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
+          type="input"
+          value={description}
+          placeholder="Description"
+          onChange={(e)=>setDescription(e.target.value)}
+        
         />
         <button
           className={`mb-4 px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 ${

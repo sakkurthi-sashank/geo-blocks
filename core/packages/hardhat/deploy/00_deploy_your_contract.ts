@@ -1,21 +1,24 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
+import { Contract } from "ethers";
 
 const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  // Modify the constructor arguments to match your contract
-  const name = "Your NFT Contract";
-  const symbol = "YNFT";
-  const baseURI = "https://your-base-uri.com/";
-
   await deploy("YourContract", {
     from: deployer,
-    args: [name, symbol, baseURI], // Pass the constructor arguments here
+    args: [], // No constructor arguments needed as per the updated contract
     log: true,
-    autoMine: true,
   });
+
+  // Get the deployed contract to interact with it after deploying.
+  const yourContract = await hre.ethers.getContract<Contract>("YourContract", deployer);
+
+  // Interact with the deployed contract here if needed
+  // Mint NFTs if required
+  const tokenId = await yourContract.mintNFT("Title", "Description", "ImageURL", deployer);
+  console.log("NFT minted with tokenId:", tokenId.toString());
 };
 
 export default deployYourContract;
