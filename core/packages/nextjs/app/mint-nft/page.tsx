@@ -17,7 +17,7 @@ export default function MintNFTPage() {
   const { writeAsync, isLoading, isMining } = useScaffoldContractWrite({
     contractName: "YourContract",
     functionName: "mintNFT",
-    args: [title, description,dynamicLink + "/" + file?.name,  connectedAddress],
+    args: [title, description, uploadLink + "/" + file?.name, connectedAddress],
     onBlockConfirmation: txnReceipt => {
       console.log("Transaction blockHash", txnReceipt.blockHash);
     },
@@ -61,20 +61,19 @@ export default function MintNFTPage() {
             }
           }}
         />
-         <input
+        <input
           className="mb-4 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
           type="input"
           value={title}
           placeholder="Title"
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={e => setTitle(e.target.value)}
         />
         <input
           className="mb-4 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
           type="input"
           value={description}
           placeholder="Description"
-          onChange={(e)=>setDescription(e.target.value)}
-        
+          onChange={e => setDescription(e.target.value)}
         />
         <button
           className={`mb-4 px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 ${
