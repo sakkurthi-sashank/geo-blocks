@@ -118,6 +118,11 @@ const config: HardhatUserConfig = {
       url: "https://sepolia.publicgoods.network",
       accounts: [deployerPrivateKey],
     },
+    testnet: {
+      url: "https://rpc.test.btcs.network",
+      accounts: [deployerPrivateKey],
+      chainId: 1115,
+    },
   },
   // configuration for harhdat-verify plugin
   etherscan: {

@@ -5,43 +5,79 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: CryptoPunksMarket
-    network: mainnet
+    name: NFTMinter
+    network: mumbai
     source:
-      address: "0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb"
-      abi: CryptoPunksMarket
-      startBlock: 3914495
+      address: "0x2cd361587F1e172b2bE59B8E21fd63f4039F6010"
+      abi: NFTMinter
+      startBlock: 047618004
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - Assign
+        - Approval
+        - ApprovalForAll
+        - BatchMetadataUpdate
+        - DefaultRoyalty
+        - EIP712DomainChanged
+        - FlatPlatformFeeUpdated
+        - Initialized
+        - MetadataFrozen
+        - MetadataUpdate
+        - OwnerUpdated
+        - PlatformFeeInfoUpdated
+        - PlatformFeeTypeUpdated
+        - PrimarySaleRecipientUpdated
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - RoyaltyForToken
+        - TokensMinted
+        - TokensMintedWithSignature
         - Transfer
-        - PunkTransfer
-        - PunkOffered
-        - PunkBidEntered
-        - PunkBidWithdrawn
-        - PunkBought
-        - PunkNoLongerForSale
       abis:
-        - name: CryptoPunksMarket
-          file: ./abis/CryptoPunksMarket.json
+        - name: NFTMinter
+          file: ./abis/NFTMinter.json
       eventHandlers:
-        - event: Assign(indexed address,uint256)
-          handler: handleAssign
-        - event: Transfer(indexed address,indexed address,uint256)
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: BatchMetadataUpdate(uint256,uint256)
+          handler: handleBatchMetadataUpdate
+        - event: DefaultRoyalty(indexed address,uint256)
+          handler: handleDefaultRoyalty
+        - event: EIP712DomainChanged()
+          handler: handleEIP712DomainChanged
+        - event: FlatPlatformFeeUpdated(address,uint256)
+          handler: handleFlatPlatformFeeUpdated
+        - event: Initialized(uint8)
+          handler: handleInitialized
+        - event: MetadataFrozen()
+          handler: handleMetadataFrozen
+        - event: MetadataUpdate(uint256)
+          handler: handleMetadataUpdate
+        - event: OwnerUpdated(indexed address,indexed address)
+          handler: handleOwnerUpdated
+        - event: PlatformFeeInfoUpdated(indexed address,uint256)
+          handler: handlePlatformFeeInfoUpdated
+        - event: PlatformFeeTypeUpdated(uint8)
+          handler: handlePlatformFeeTypeUpdated
+        - event: PrimarySaleRecipientUpdated(indexed address)
+          handler: handlePrimarySaleRecipientUpdated
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: RoyaltyForToken(indexed uint256,indexed address,uint256)
+          handler: handleRoyaltyForToken
+        - event: TokensMinted(indexed address,indexed uint256,string)
+          handler: handleTokensMinted
+        - event: TokensMintedWithSignature(indexed address,indexed address,indexed uint256,(address,address,uint256,address,string,uint256,address,uint128,uint128,bytes32))
+          handler: handleTokensMintedWithSignature
+        - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-        - event: PunkTransfer(indexed address,indexed address,uint256)
-          handler: handlePunkTransfer
-        - event: PunkOffered(indexed uint256,uint256,indexed address)
-          handler: handlePunkOffered
-        - event: PunkBidEntered(indexed uint256,uint256,indexed address)
-          handler: handlePunkBidEntered
-        - event: PunkBidWithdrawn(indexed uint256,uint256,indexed address)
-          handler: handlePunkBidWithdrawn
-        - event: PunkBought(indexed uint256,uint256,indexed address,indexed address)
-          handler: handlePunkBought
-        - event: PunkNoLongerForSale(indexed uint256)
-          handler: handlePunkNoLongerForSale
-      file: ./src/crypto-punks-market.ts
+      file: ./src/nft-minter.ts
