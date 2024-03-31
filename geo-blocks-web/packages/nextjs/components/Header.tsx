@@ -40,10 +40,6 @@ export const Header = () => {
 
   return (
     <div className="bg-gray-950 h-14 flex justify-between px-3">
-      <div className="flex justify-start items-center w-fit md:w-full">
-        <div className="text-gray-100 font-bold text-2xl text-nowrap">Geo Blocks</div>
-      </div>
-
       <div className="flex-row items-center justify-center text-gray-600 w-full hidden md:flex">
         {menuLinks.map(link => (
           <Link

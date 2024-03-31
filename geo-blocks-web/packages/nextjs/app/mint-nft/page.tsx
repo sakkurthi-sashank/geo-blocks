@@ -9,15 +9,16 @@ export default function MintNFTPage() {
   const [file, setFile] = useState<File | null>(null);
   const [isNFTLoading, setIsNFTLoading] = useState(false);
   const [uploadLink, setUploadLink] = useState<string>("");
-
+  const [dynamicLink, setDynamicLink] = useState<string>("");
   const { address: connectedAddress } = useAccount();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const { writeAsync, isLoading, isMining } = useScaffoldContractWrite({
-    contractName: "YourContract",
-    functionName: "mintNFT",
-    args: [title, description, uploadLink + "/" + file?.name, connectedAddress],
+    contractName: "MyContract",
+    functionName: "mintTo",
+    args: [connectedAddress, `${uploadLink}/${file?.name}`],
+    blockConfirmations: 1,
     onBlockConfirmation: txnReceipt => {
       console.log("Transaction blockHash", txnReceipt.blockHash);
     },
@@ -40,7 +41,7 @@ export default function MintNFTPage() {
       });
 
       setUploadLink(uploadResult.protocolLink);
-      await writeAsync();
+      setDynamicLink(uploadResult.dynamicLinks[0]);
     } catch (err) {
       alert(err);
     } finally {
@@ -76,11 +77,32 @@ export default function MintNFTPage() {
           onChange={e => setDescription(e.target.value)}
         />
 
+        <div className="mb-4">
+          <p>Upload Link: {uploadLink}</p>
+          <p>Dynamic Link: {dynamicLink}</p>
+          <a href={`${uploadLink}/${file?.name}`} className="text-blue-500 hover:text-blue-700">
+            {file?.name}
+          </a>
+        </div>
+
         <button
           className={`px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 ${
             isNFTLoading || isLoading || isMining ? "opacity-50 cursor-not-allowed" : ""
           }`}
           onClick={handleUpload}
+          disabled={isNFTLoading || isLoading || isMining}
+        >
+          Upload File
+        </button>
+
+        <button
+          className={`px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 ${
+            isNFTLoading || isLoading || isMining ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          onClick={async () => {
+            console.log(uploadLink + "/" + file?.name);
+            await writeAsync();
+          }}
           disabled={isNFTLoading || isLoading || isMining}
         >
           Mint
