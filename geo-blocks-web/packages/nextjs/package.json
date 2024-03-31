@@ -40,6 +40,7 @@
     "react-dom": "^18.2.0",
     "react-gauge-chart": "^0.4.1",
     "react-hot-toast": "^2.4.0",
+    "recharts": "^2.12.3",
     "three": "^0.163.0",
     "use-debounce": "^8.0.4",
     "usehooks-ts": "^2.13.0",
