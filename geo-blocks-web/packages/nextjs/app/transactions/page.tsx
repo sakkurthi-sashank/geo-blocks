@@ -34,7 +34,7 @@ export default function WritePage() {
 
   return (
     <div className="p-3">
-      <h3 className="text-2xl text-gray-800 font-bold px-5 py-2.5">On Chain Transactions</h3>
+      <h3 className="text-2xl text-gray-100 font-bold px-5 py-2.5">On Chain Transactions</h3>
       <div className="grid grid-cols-1 gap-4 p-4">
         {data.transfers.map((transfer: any) => (
           <div className="card max-w-2xl w-full space-y-3 bg-base-100 shadow-xl p-4" key={transfer.id}>
