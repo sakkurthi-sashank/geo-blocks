@@ -5,21 +5,22 @@
     android:id="@+id/gerenciadorImagem">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:id="@+id/txtNomePkmnCaptura"
-        android:text="Congratulations you found an NFT !!"
+        android:text="Congratulations you won a NFT !"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#000000"
+        android:textSize="18sp"
         android:background="@drawable/roundshapebranco"
         android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_x="0dp"
+        android:layout_x="10dp"
         android:layout_y="8dp"
         android:padding="5dp"
         android:alpha="0.8"
         android:clickable="false"
+        android:layout_margin="5dp"
         android:visibility="visible"/>
 
     <ImageView

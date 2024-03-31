@@ -47,6 +47,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/wallet_cv"
                 android:background="@color/black"
                 >
 
@@ -107,12 +108,10 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/new_cv"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="95dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"
             app:cardCornerRadius="25dp"
+            android:layout_marginBottom="-20dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -131,9 +130,8 @@
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/button_Catchings"
+                app:layout_constraintRight_toLeftOf="@id/my_nfts"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
                 android:adjustViewBounds="true"
@@ -141,11 +139,10 @@
                 android:onClick="clickTroca" />
 
             <ImageButton
-                android:id="@+id/button_Catchings"
+                android:id="@+id/my_nfts"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/button_sell"
                 app:layout_constraintLeft_toRightOf="@id/button_trade"
                 android:adjustViewBounds="true"
@@ -159,10 +156,9 @@
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 app:layout_constraintRight_toLeftOf="@id/buttonChat"
-                app:layout_constraintLeft_toRightOf="@id/button_Catchings"
+                app:layout_constraintLeft_toRightOf="@id/my_nfts"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_toRightOf="@+id/button_Catchings"
+                android:layout_toRightOf="@+id/my_nfts"
                 android:adjustViewBounds="true"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
@@ -175,13 +171,21 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/button_sell"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:adjustViewBounds="true"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
+                android:onClick="chat"
                 android:src="@drawable/chat" />
 
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/my_nfts"
+                android:textSize="12sp"
+                android:layout_marginBottom="1dp"
+                android:textColor="@color/white"
+                android:text="             Trade                MyNfts           MarketPlace            Chat"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

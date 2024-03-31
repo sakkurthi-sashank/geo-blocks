@@ -26,6 +26,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ritorno.geoblocks.avatar.AvatarActivity;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -155,9 +157,9 @@ public class CapturaActivity extends Activity implements SensorEventListener {
             nomePkmnCaptura.post(new Runnable() {
                 @Override
                 public void run() {
-                    nomePkmnCaptura.setText("Congratulations, you found the Monkey NFT !!");
+                    nomePkmnCaptura.setText("Congratulations, you found a NFT !!");
                     nomePkmnCaptura.measure(0,0);
-                    nomePkmnCaptura.setX(dimenX - nomePkmnCaptura.getMeasuredWidth() + ViewUnitsUtil.convertDpToPixel(8));
+                    nomePkmnCaptura.setX(dimenX - nomePkmnCaptura.getMeasuredWidth() - ViewUnitsUtil.convertDpToPixel(8));
                 }
             });
             img.setImageResource(tabDrawables[id]);
@@ -470,7 +472,8 @@ public class CapturaActivity extends Activity implements SensorEventListener {
 
         pokebola.animate().rotation(0).start();
         img.setImageResource(R.drawable.explosion);
-
+        Toast.makeText(this, "Mint Successfull !!", Toast.LENGTH_LONG).show();
+        this.finish();
         img.post(new Runnable() {
             @Override
             public void run() {

@@ -1,26 +1,74 @@
 {
   "project_info": {
-    "project_number": "641807293343",
-    "project_id": "geoblocks-c07f2",
-    "storage_bucket": "geoblocks-c07f2.appspot.com"
+    "project_number": "1041461623889",
+    "firebase_url": "https://chatopia-9993c-default-rtdb.firebaseio.com",
+    "project_id": "chatopia-9993c",
+    "storage_bucket": "chatopia-9993c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:641807293343:android:075a1af433b2821a14fbaa",
+        "mobilesdk_app_id": "1:1041461623889:android:ba4f98f3f46ff5523f8c70",
         "android_client_info": {
-          "package_name": "com.ritorno.geoblocks"
+          "package_name": "com.example.chatopia"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1041461623889-cdikfut1or7i86ffccedaff3j5faiu5f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chatopia",
+            "certificate_hash": "f7aaaa34b5014185b9f36c2d87de3595e6829e7b"
+          }
+        },
+        {
+          "client_id": "1041461623889-mmg8vlcn2fm1bvdfmoj4d8q0v9ttn5p9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyAHGGFyVrADLkBNfQKJuAnOyxNC11Fp-QY"
+          "current_key": "AIzaSyCIGhi6YW9A8b4a8_BUxGVFuBYFZFm2hUE"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1041461623889-mmg8vlcn2fm1bvdfmoj4d8q0v9ttn5p9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041461623889:android:16d604e718a0c8e23f8c70",
+        "android_client_info": {
+          "package_name": "com.ritorno.geoblocks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1041461623889-mmg8vlcn2fm1bvdfmoj4d8q0v9ttn5p9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIGhi6YW9A8b4a8_BUxGVFuBYFZFm2hUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1041461623889-mmg8vlcn2fm1bvdfmoj4d8q0v9ttn5p9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

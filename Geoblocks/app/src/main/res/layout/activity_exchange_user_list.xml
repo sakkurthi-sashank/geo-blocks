@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context="com.ritorno.geoblocks.TrocaListaUsuariosActivity">
+
+    <!-- Header bar -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/black"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/barraVoltarTroca">
+
+        <ImageButton
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:src="@drawable/baseline_keyboard_arrow_left_24"
+            android:background="@android:color/transparent"
+            android:id="@+id/voltarTroca"
+            android:onClick="clickVoltar"/>
+
+        <TextView
+            android:id="@+id/txtTituloPokedex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/voltarTroca"
+            android:layout_marginLeft="10dp"
+
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Nearby Users"
+            android:textStyle="normal"
+            android:textColor="#FFFFFF" />
+
+    </RelativeLayout>
+
+
+    <!-- Lista de usuários disponíveis -->
+    <ListView
+        android:id="@+id/bluetooth_user_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:layout_below="@id/barraVoltarTroca"
+        android:layout_above="@id/buscar"
+        />
+
+
+    <!-- Botões de controle da Busca/Listagem de dispostivos por Bluetooth-->
+    <Button
+        android:id="@+id/buscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+
+        android:text="Search Users"
+        android:textStyle="normal"
+        android:textSize="20dp"
+        android:textColor="#000000"
+
+        android:onClick="updateBT"/>
+
+
+
+</RelativeLayout>

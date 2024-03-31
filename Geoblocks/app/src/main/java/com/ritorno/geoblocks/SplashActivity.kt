@@ -39,6 +39,9 @@ open class SplashActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+
+
+
         sp = this.getSharedPreferences("wallet", MODE_PRIVATE)
 
         btn = findViewById(R.id.connect_wallet)
